@@ -15,6 +15,7 @@ Prekladac: Apple clang 14.0
 // Struktura pro kruhový buffer
 typedef struct {
     int size; // Velikost bufferu
+    int filled; // Zaplněnost bufferu
     int start; // Index začátku bufferu
     int end; // Index konce bufferu
     char **lines; // Pole ukazatelů na řádky
@@ -37,6 +38,7 @@ circular_buffer * cb_create(int n){
         exit(1);
     }
     cb->size = n;
+    cb->filled = 0;
     cb->start = 0;
     cb->end = 0;
     return cb;
@@ -48,37 +50,40 @@ circular_buffer * cb_create(int n){
 
 void cb_put(circular_buffer *cb, char *line){
 
-    // Pokud je buffer plný, tak se přepíše první prvek
-    if((cb->end + 1) % cb->size == cb->start){
-        free(cb->lines[cb->start++]);
-        cb->start %= cb->size;
+    if(cb->filled == cb->size){
+        free(cb->lines[cb->start++]); // uvolnění paměti pro přepsaný řádek
+        cb->start %= cb->size; // posun na další prvek
     }
-    // Vložení řádku do bufferu
+    else{
+        cb->filled++;
+    }
     cb->lines[cb->end++] = line;
-    cb->end %= cb->size;
+    cb->end %= cb->size; // posun na další prvek
 }
 
 // Funkce pro získání řádku z bufferu
 // @params cb - ukazatel na buffer
 // @return - řádek, který se má získat
 char * cb_get(circular_buffer *cb){
-    if (cb->end == cb->start){
-        return NULL; // buffer je prázdný
+
+    if(cb->filled == 0){
+        return NULL;
     }
-    else{
-        char *line = cb->lines[cb->start++];
-        cb->start %= cb->size; // posun na další prvek
-        return line;
-    }
+    char *line = cb->lines[cb->start++];
+    cb->start %= cb->size; // posun na další prvek
+    cb->filled--;
+    return line;
 }
 
 // Funkce pro uvolnění paměti bufferu
 // @params cb - ukazatel na buffer
 void cb_free(circular_buffer *cb){
+
+    for(int i = 0; i < cb->size; i++){
+        free(cb->lines[i]);
+    }
     free(cb->lines);
-    cb->lines = NULL;
     free(cb);
-    cb = NULL;
 }
 
 int main(int argc, char *argv[]){
@@ -149,16 +154,13 @@ int main(int argc, char *argv[]){
     }
 
     // Vypsání řádků
-
     char *line_to_print = cb_get(cb);
     while(line_to_print != NULL){
         printf("%s", line_to_print);
-        free(line_to_print);
         line_to_print = cb_get(cb);
     }
 
     // Uvolnění paměti
-
     cb_free(cb);
 
     if(filename != NULL){
@@ -167,3 +169,4 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+
