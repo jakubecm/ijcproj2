@@ -88,33 +88,58 @@ void cb_free(circular_buffer *cb){
 
 int main(int argc, char *argv[]){
 
-    if(argc > 3){
-        fprintf(stderr, "Error: Too many arguments.\n");
-        exit(1);
-    }
-   
     char *filename = NULL;
     int n = 10;
 
-    if(argc == 3){
-        if(strcmp(argv[1], "-n") == 0){
+    if(argc > 4){
+        fprintf(stderr, "Error: Too many arguments.\n");
+        exit(1);
+    }
+
+    if (argc == 4)
+    {
+        if (strcmp(argv[1], "-n") == 0)
+        {
             n = strtol(argv[2], NULL, 10);
-            if(n <= 0){
+            if (n <= 0)
+            {
                 fprintf(stderr, "Error: Invalid number of lines.\n");
                 exit(1);
             }
         }
-        else{
+        else
+        {
+            fprintf(stderr, "Error: Invalid argument.\n");
+            exit(1);
+        }
+        filename = argv[3];
+    }
+    else if (argc == 3)
+    {
+        if (strcmp(argv[1], "-n") == 0)
+        {
+            n = strtol(argv[2], NULL, 10);
+            if (n <= 0)
+            {
+                fprintf(stderr, "Error: Invalid number of lines.\n");
+                exit(1);
+            }
+        }
+        else
+        {
             fprintf(stderr, "Error: Invalid argument.\n");
             exit(1);
         }
     }
-    else if(argc == 2){
-        if(strcmp(argv[1], "-n") == 0){
+    else if (argc == 2)
+    {
+        if (strcmp(argv[1], "-n") == 0)
+        {
             fprintf(stderr, "Error: Missing number of lines.\n");
             exit(1);
         }
-        else{
+        else
+        {
             filename = argv[1];
         }
     }
@@ -142,7 +167,7 @@ int main(int argc, char *argv[]){
     while ((read = getline(&line, &len, file)) != -1) {
         if(read > LINE_LIMIT){
             if(overflowFlag == 0){
-                fprintf(stderr, "Warning: Line is too long, it will be truncated.\n");
+                fprintf(stderr, "Warning: One of the lines is too long, it will be truncated to %i.\n", LINE_LIMIT);
                 // Nastav flag na 1, aby se warning znovu nevypisoval
                 overflowFlag = 1;
             }
