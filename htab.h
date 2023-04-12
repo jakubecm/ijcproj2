@@ -48,3 +48,4 @@ void htab_free(htab_t * t);     // destruktor tabulky
 void htab_statistics(const htab_t * t);
 
 #endif // HTAB_H__
+

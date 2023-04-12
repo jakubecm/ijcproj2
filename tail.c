@@ -161,7 +161,7 @@ int main(int argc, char *argv[]){
     // Načtení řádků
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
+    size_t read;
     int overflowFlag = 0;
 
     while ((read = getline(&line, &len, file)) != -1) {

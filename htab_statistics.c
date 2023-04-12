@@ -3,11 +3,13 @@
 #include "htab_private.h"
 #include <stdio.h>
 
+
+
 // výpočet a tisk statistik délky seznamů (min,max,avg) do stderr:
 void htab_statistics(const htab_t * t){
     size_t min = 0; 
     size_t max = 0;
-
+    
     for (size_t i = 0; i < t->arr_size; i++) {
         size_t count = 0;
         struct htab_item *item = t->arr_ptr[i]; // konkretni seznam itemu
