@@ -180,6 +180,7 @@ int main(int argc, char *argv[]){
                 overflowFlag = 1;
             }
             line[LINE_LIMIT - 1] = '\n'; // Na konec přidat znak konce řádku
+            // Na indexu line[LINE_LIMIT] přidávat nic nemusím, protože null terminator tam za mě dal už fgets.
             int c;
             while ((c = fgetc(file)) != '\n' && c != EOF)
             {
