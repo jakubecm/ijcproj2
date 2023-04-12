@@ -12,12 +12,14 @@
 // Vrací ukazatel na vytvořenou tabulku, NULL v případě chyby.
 
 htab_t *htab_init(const size_t n) {
-    htab_t *t = malloc(sizeof(htab_t) + n * sizeof(struct htab_item *));
+    htab_t *t = malloc(sizeof(htab_t));
+
     if (t == NULL) {
         return NULL; // alokace selhala
     }
     t->size = 0;
     t->arr_size = n;
+    t->arr_ptr = malloc(n * sizeof(struct htab_item *));
     for (size_t i = 0; i < n; i++) {
         t->arr_ptr[i] = NULL;
     }

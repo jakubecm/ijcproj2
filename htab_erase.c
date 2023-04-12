@@ -3,6 +3,7 @@
 
 #include "htab.h"
 #include "htab_private.h"
+#include <stdlib.h>
 
 //htab_erase(t,key)       zrušení záznamu se zadaným klíčem (úspěch:true)
 

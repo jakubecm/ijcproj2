@@ -2,7 +2,7 @@
 
 
 #include "htab.h"
-#include "io.c"
+#include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
 /*
@@ -31,7 +31,7 @@ void print_pairs(htab_pair_t *pair) {
   printf("%s\t%d\n", pair->key, pair->value);
 }
 
-int main() {
+int main(void) {
     
     htab_t* t = htab_init(HTAB_SIZE); // Inicializuje tabulku
     
@@ -72,3 +72,4 @@ int main() {
 
     return EXIT_SUCCESS;
 }
+
