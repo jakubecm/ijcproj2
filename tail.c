@@ -157,31 +157,45 @@ int main(int argc, char *argv[]){
     }
 
     circular_buffer *cb = cb_create(n);
+    if (cb == NULL)
+    {
+        fprintf(stderr, "Error: Can't allocate memory for buffer.\n");
+        exit(1);
+    }
 
     // Načtení řádků
-    char *line = NULL;
-    size_t len = 0;
-    size_t read;
+    char *line = malloc(LINE_LIMIT * sizeof(char));
     int overflowFlag = 0;
 
-    while ((read = getline(&line, &len, file)) != -1) {
-        if(read > LINE_LIMIT){
-            if(overflowFlag == 0){
+    while (fgets(line, LINE_LIMIT, file) != NULL)
+    {
+        size_t read = strlen(line);
+
+        if (read > 0 && line[read - 1] != '\n')
+        {
+            if (overflowFlag == 0)
+            {
                 fprintf(stderr, "Warning: One of the lines is too long, it will be truncated to %i.\n", LINE_LIMIT);
                 // Nastav flag na 1, aby se warning znovu nevypisoval
                 overflowFlag = 1;
             }
-            line[LINE_LIMIT] = '\n';
-            line[LINE_LIMIT+1] = '\0';
+            line[LINE_LIMIT - 1] = '\n'; // Na konec přidat znak konce řádku
+            int c;
+            while ((c = fgetc(file)) != '\n' && c != EOF)
+            {
+                // Zahodit zbytek řádku
+            }
         }
+
         cb_put(cb, line);
-        line = NULL;
+        line = malloc(LINE_LIMIT * sizeof(char)); // Allocate new memory for the next line
     }
+    free(line); // Free the last allocated memory after the loop
 
     // Vypsání řádků
     char *line_to_print = cb_get(cb);
     while(line_to_print != NULL){
-        printf("%s", line_to_print);
+        printf("%s",line_to_print);
         line_to_print = cb_get(cb);
     }
 
