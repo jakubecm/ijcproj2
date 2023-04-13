@@ -1,44 +1,44 @@
-# Makefile for compilation
-# Autor: Milan Jakubec
-# Login: xjakub41
+# Makefile
+# Řešení IJC-DU2, příklad 2), 13.4.2023
+# Autor: Milan Jakubec, 1 BIT FIT
+# Přeloženo: Apple clang verze 14.0.0
+
 
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
+CFLAGS = -g -O2 -std=c11 -pedantic -Wall -Wextra
 
-CXX = g++
-CXXFLAGS = -std=c++17 -pedantic -Wall
+HTAB_OBJS = htab_bucket_count.o htab_clear.o htab_erase.o htab_find.o htab_for_each.o htab_free.o htab_hash_function.o htab_init.o htab_lookup_add.o htab_size.o htab_statistics.o
 
-TARGETS= tail libhtab.a libhtab.so wordcount wordcount-dynamic
-LIB_OBJECTS=htab_bucket_count.o htab_clear.o htab_erase.o htab_find.o htab_for_each.o htab_free.o htab_hash_function.o htab_init.o htab_lookup_add.o htab_size.o htab_statistics.o
-WORDCOUNT_OBJECTS=libhtab.a io.o worcount.o
-WORDCOUNT_DYNAMIC_OBJECTS=libhtab.so io.o worcount.o
+all: tail wordcount wordcount-dynamic
 
-
-all: $(TARGETS)
-
-tail: tail.o
-	$(CC) $(CFLAGS) -o tail tail.o
-
-%.o: %.c htab.h hash_tab_struct.h
-	$(CC) $(CFLAGS) -fpic -c $<
-
-wordcount-: wordcount-.cc
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-wordcount: $(WORDCOUNT_OBJECTS)
-	$(CC) $(CFLAGS) -static $^ -o $@
-
-wordcount-dynamic: $(WORDCOUNT_DYNAMIC_OBJECTS)
+tail: tail.c
 	$(CC) $(CFLAGS) $^ -o $@
 
-libhtab.a: $(LIB_OBJS)
+%.o: %.c htab.h htab_private.h
+	$(CC) $(CFLAGS) -fpic -c $<
+
+wordcount: wordcount.o io.o libhtab.a
+	$(CC) $(CFLAGS) -static $^ -o $@
+
+wordcount-dynamic: wordcount.o io.o libhtab.so
+	$(CC) $(CFLAGS) $^ -o $@
+
+wordcountcpp: wordcount.cpp
+	g++ -std=c++17 -O2 -pedantic -Wall  $^ -o $@
+
+libhtab.a: $(HTAB_OBJS)
 	ar rcs $@ $^
 
-libhtab.so: $(LIB_OBJS)
-	$(CC) -fpic -shared $^ -o $@
+libhtab.so: $(HTAB_OBJS)
+	$(CC) $(CFLAGS) -fpic -shared $^ -o $@
+
+run: tail wordcount wordcount-dynamic
+	./tail <tail.c
+	./wordcount <wordcount.c
+	export LD_LIBRARY_PATH="." && ./wordcount-dynamic <wordcount.c
 
 clean:
-	rm *.o $(TARGETS)
+	rm -f *.o *.out *.zip tail wordcount wordcount-dynamic wordcountcpp libhtab.a libhtab.so wordcountcc
 
 pack:
-	zip xjakub41.zip *.c *.h *.cc Makefile
+	zip xjakub41.zip *.c *.cc *.h Makefile

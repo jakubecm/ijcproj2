@@ -30,7 +30,7 @@ void htab_statistics(const htab_t * t){
             max = count;
         }
     }
-    fprintf(stderr, "min: %zu, max: %zu, avg: %f", min, max, (t->size / t->arr_size));
+    fprintf(stderr, "min: %zu, max: %zu, avg: %lu", min, max, (t->size / t->arr_size));
 
 }
 
