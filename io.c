@@ -2,11 +2,13 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 int read_word(char *s, int max, FILE *f){
 
-    int c;
+    int c = 0;
     int i = 0;
+    static bool warning = false;
     while ((c = fgetc(f)) != EOF)
     {
         if (isspace(c))
@@ -25,7 +27,14 @@ int read_word(char *s, int max, FILE *f){
             }
             else
             {
-                fprintf(stderr, "Warning: word is too long, it will be truncated to %d characters.", max - 1);
+                if(!warning){
+                    fprintf(stderr, "Warning: word is too long, it will be truncated to %d characters.\n", max - 1);
+                    warning = true;
+                }
+                // Zahod zbytek slova
+                while (!isspace(fgetc(f))){
+                    ;
+                }
                 break;
             }
         }

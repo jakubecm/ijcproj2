@@ -23,7 +23,7 @@ wordcount: wordcount.o io.o libhtab.a
 wordcount-dynamic: wordcount.o io.o libhtab.so
 	$(CC) $(CFLAGS) $^ -o $@
 
-wordcountcpp: wordcount.cpp
+wordcount-cc: wordcount.cc
 	g++ -std=c++17 -O2 -pedantic -Wall  $^ -o $@
 
 libhtab.a: $(HTAB_OBJS)

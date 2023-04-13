@@ -11,7 +11,7 @@ Studoval jsem trochu jak funguje ta hash tabulka a zjistil jsem ze je doporucene
 efektivitu, a proto jsem se rozhodl pro 10 007.
 */
 #define HTAB_SIZE 10007 
-#define MAX_WORD_LEN 255 // 255 + '\0'
+#define MAX_WORD_LEN 255 // 254 + '\0'
 
 
 #ifdef HASHTEST
@@ -53,7 +53,7 @@ int main(void) {
 
         htab_pair_t* pair = htab_lookup_add(t, key);
         if (pair == NULL) {
-            fprintf(stderr, "Eror: Couldnt insert pair into table. Exiting...\n");
+            fprintf(stderr, "Error: Couldnt insert pair into table. Exiting...\n");
             htab_free(t);
             return EXIT_FAILURE;
         }
