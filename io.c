@@ -1,9 +1,18 @@
-
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>
 
+//read_word - funkce nacte jedno slovo ze souboru f
+// @param s ukazatel na retezec, kam se ma slovo ulozit
+// @param max maximalni delka slova
+// @param f soubor, ze ktereho se ma slovo nacist
+// @return delka nacteneho slova, EOF pokud se nepodarilo nic nacist
 int read_word(char *s, int max, FILE *f){
 
     int c = 0;

@@ -1,17 +1,18 @@
-
-
-
 /*
-htab_pair_t htab_lookup_add(htab_t *t, htab_key_t key);
-V tabulce  t  vyhledá záznam odpovídající řetězci  key  a
-- pokud jej nalezne, vrátí ukazatel na záznam
-- pokud nenalezne, automaticky přidá záznam a vrátí ukazatel
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
 */
 
 #include "htab.h"
 #include "htab_private.h"
 #include <stdlib.h>
 
+
+// htab_lookup_add - funkce hleda zaznam v tabulce, pokud tam neni, prida ho
+// @param t hash tabulka
+// @param key klic
+// @return ukazatel na zaznam
 htab_pair_t *htab_lookup_add(htab_t *t, htab_key_t key) {
 
     htab_pair_t * pair = htab_find(t, key);

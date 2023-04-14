@@ -1,11 +1,16 @@
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #include "htab.h"
 #include "htab_private.h"
 #include <stdio.h>
 
-
-
-// výpočet a tisk statistik délky seznamů (min,max,avg) do stderr:
+// htab_statistics - funkce pro výpočet a tisk statistik délky seznamů (min,max,avg) do stderr
+// @param t hash tabulka
+// @return void
 void htab_statistics(const htab_t * t){
     size_t min = 0; 
     size_t max = 0;

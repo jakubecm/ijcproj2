@@ -38,7 +38,7 @@ run: tail wordcount wordcount-dynamic
 	export LD_LIBRARY_PATH="." && ./wordcount-dynamic <wordcount.c
 
 clean:
-	rm -f *.o *.out *.zip tail wordcount wordcount-dynamic wordcountcpp libhtab.a libhtab.so wordcountcc
+	rm -f *.o *.out *.zip tail wordcount wordcount-dynamic wordcountcpp libhtab.a libhtab.so wordcount-cc
 
 pack:
 	zip xjakub41.zip *.c *.cc *.h Makefile

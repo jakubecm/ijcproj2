@@ -1,5 +1,8 @@
-
-
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #ifndef IO_H
 #define IO_H

@@ -1,9 +1,16 @@
-
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #include "htab.h"
 #include "htab_private.h"
 
-//Vraci ukazatel na zaznam s klicem key, pokud ho v tabulce neni, vraci NULL
+// htab_find - funkce pro nalezeni zaznamu key v tabulce
+// @param t hash tabulka
+// @param key klic
+// @return ukazatel na zaznam s klicem key, pokud ho v tabulce neni, vraci NULL
 htab_pair_t * htab_find(const htab_t * t, htab_key_t key) {
     size_t index = htab_hash_function(key) % t->arr_size; // index do pole ukazatelu
     struct htab_item *item = t->arr_ptr[index]; 

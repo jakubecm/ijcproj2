@@ -1,6 +1,10 @@
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 // htab.h -- rozhraní knihovny htab (řešení IJC-DU2)
 // Licence: žádná (Public domain)
-
 
 // následující řádky zabrání násobnému vložení:
 #ifndef HTAB_H__

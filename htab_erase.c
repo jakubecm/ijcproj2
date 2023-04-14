@@ -1,12 +1,17 @@
-
-
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #include "htab.h"
 #include "htab_private.h"
 #include <stdlib.h>
 
-//htab_erase(t,key)       zrušení záznamu se zadaným klíčem (úspěch:true)
-
+//htab_erase(t,key) - zrušení záznamu se zadaným klíčem
+// @param t hash tabulka
+// @param key klic
+// @return true pokud byl zaznam smazan, jinak false
 bool htab_erase(htab_t * t, htab_key_t key) {
     size_t index = htab_hash_function(key) % t->arr_size;
     struct htab_item *previous = NULL; // pomocny ukazatel na predchozi prvek

@@ -1,5 +1,8 @@
-
-
+/*
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 2)
+Datum: 14.4. 2023
+*/
 
 #include "htab.h"
 #include "io.h"
@@ -11,7 +14,7 @@ Studoval jsem trochu jak funguje ta hash tabulka a zjistil jsem ze je doporucene
 efektivitu, a proto jsem se rozhodl pro 10 007.
 */
 #define HTAB_SIZE 10007 
-#define MAX_WORD_LEN 255 // 254 + '\0'
+#define MAX_WORD_LEN 255 // 255 + '\0'
 
 
 #ifdef HASHTEST
@@ -45,7 +48,7 @@ int main(void) {
 
     while (length != EOF) {
         char key[MAX_WORD_LEN] = {0};
-        length = read_word(key, MAX_WORD_LEN, stdin);
+        length = read_word(key, MAX_WORD_LEN + 1, stdin);
 
         if (length == EOF) {
             break;

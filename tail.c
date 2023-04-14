@@ -1,9 +1,8 @@
 /*
-Příklad a)
-Soubor: tail.c
-Autor: Milan Jakubec 1 BIT FIT VUT
-Prekladac: Apple clang 14.0
-*/  
+Autor: Milan Jakubec, Fakulta informačních technologií VUT v Brně
+Příklad 1)
+Datum: 3.4. 2023
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +21,7 @@ typedef struct {
 } circular_buffer;
 
 // Funkce pro vytvoření kruhového bufferu
-// @params n - velikost bufferu
+// @param n - velikost bufferu
 // @return - ukazatel na vytvořený buffer
 circular_buffer * cb_create(int n){
 
@@ -45,8 +44,8 @@ circular_buffer * cb_create(int n){
 }
 
 // Funkce pro vložení řádku do bufferu
-// @params cb - ukazatel na buffer
-// @params line - řádek, který se má vložit
+// @param cb - ukazatel na buffer
+// @param line - řádek, který se má vložit
 
 void cb_put(circular_buffer *cb, char *line){
 
@@ -62,7 +61,7 @@ void cb_put(circular_buffer *cb, char *line){
 }
 
 // Funkce pro získání řádku z bufferu
-// @params cb - ukazatel na buffer
+// @param cb - ukazatel na buffer
 // @return - řádek, který se má získat
 char * cb_get(circular_buffer *cb){
 
@@ -76,7 +75,7 @@ char * cb_get(circular_buffer *cb){
 }
 
 // Funkce pro uvolnění paměti bufferu
-// @params cb - ukazatel na buffer
+// @param cb - ukazatel na buffer
 void cb_free(circular_buffer *cb){
 
     for(int i = 0; i < cb->size; i++){
