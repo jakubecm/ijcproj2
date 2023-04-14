@@ -163,10 +163,10 @@ int main(int argc, char *argv[]){
     }
 
     // Načtení řádků
-    char *line = malloc(LINE_LIMIT * sizeof(char));
+    char *line = malloc(LINE_LIMIT * sizeof(char) + 2);
     int overflowFlag = 0;
 
-    while (fgets(line, LINE_LIMIT, file) != NULL)
+    while (fgets(line, LINE_LIMIT + 1, file) != NULL)
     {
         size_t read = strlen(line);
 
@@ -178,7 +178,7 @@ int main(int argc, char *argv[]){
                 // Nastav flag na 1, aby se warning znovu nevypisoval
                 overflowFlag = 1;
             }
-            line[LINE_LIMIT - 1] = '\n'; // Na konec přidat znak konce řádku
+            line[read] = '\n'; // Na konec přidat znak konce řádku
             // Na indexu line[LINE_LIMIT] přidávat nic nemusím, protože null terminator tam za mě dal už fgets.
             int c;
             while ((c = fgetc(file)) != '\n' && c != EOF)
@@ -188,7 +188,7 @@ int main(int argc, char *argv[]){
         }
 
         cb_put(cb, line);
-        line = malloc(LINE_LIMIT * sizeof(char)); // Allocate new memory for the next line
+        line = malloc(LINE_LIMIT * sizeof(char) + 2); // Allocate new memory for the next line
     }
     free(line); // Free the last allocated memory after the loop
 
